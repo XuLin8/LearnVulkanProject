@@ -4,12 +4,13 @@
 #pragma once
 
 #include <vk_types.h>
+#include <vector>
 
 class VulkanEngine {
 public:
 
 	bool _isInitialized{ false };
-	int _frameNumber {0};
+	int _frameNumber{ 0 };
 
 	VkExtent2D _windowExtent{ 1700 , 900 };
 	//omitted
@@ -18,6 +19,19 @@ public:
 	VkPhysicalDevice _chosenGPU;//GPU chosen as the default device
 	VkDevice _device; //Vulkan device for commands
 	VkSurfaceKHR _surface; //Vulkan window surface
+
+
+	VkSwapchainKHR _swapchain; // from other articles
+
+	// image format expected by the windowing system
+	VkFormat _swapchainImageFormat;
+
+	//array of images from the swapchain
+	std::vector<VkImage> _swapchainImages;
+
+	//array of image-views from the swapchain
+	std::vector<VkImageView> _swapchainImageViews;
+
 
 	struct SDL_Window* _window{ nullptr };
 
@@ -33,7 +47,8 @@ public:
 	//run main loop
 	void run();
 
-	
+
 private:
 	void init_vulkan();
+	void init_swapchain();
 };
