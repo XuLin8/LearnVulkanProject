@@ -30,6 +30,8 @@ public:
 	VkCommandPool _commandPool;//the command pool for out commands
 	VkCommandBuffer _mainCommandBuffer;//the buffer we will record into
 
+	VkRenderPass _renderPass;
+	std::vector<VkFramebuffer> _framebuffers;
 
 	struct SDL_Window* _window{ nullptr };
 
@@ -50,4 +52,7 @@ private:
 	void init_vulkan();
 	void init_swapchain();
 	void init_commands();
+
+	void init_default_renderpass();
+	void init_framebuffers();
 };
