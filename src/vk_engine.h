@@ -33,6 +33,9 @@ public:
 	VkRenderPass _renderPass;
 	std::vector<VkFramebuffer> _framebuffers;
 
+	VkSemaphore _presentSemaphore, _renderSemaphore;
+	VkFence _renderFence;
+
 	struct SDL_Window* _window{ nullptr };
 
 	//initializes everything in the engine
@@ -55,4 +58,5 @@ private:
 
 	void init_default_renderpass();
 	void init_framebuffers();
+	void init_sync_structures();
 };
