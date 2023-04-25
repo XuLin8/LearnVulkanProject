@@ -4,5 +4,8 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+#include <vector>
+#include <deque>
+#include <functional>
 
 //we will add our main reusable types here
