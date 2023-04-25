@@ -1,6 +1,5 @@
 //we will be using glsl version 4.5 syntax
 #version 450
-
 void main()
 {
 	//const array of positions for the triangle
