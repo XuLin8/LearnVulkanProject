@@ -11,6 +11,7 @@ public:
 
 	bool _isInitialized{ false };
 	int _frameNumber{ 0 };
+	int _selectedShader{ 0 };// 0 red; 1 colorful
 
 	VkExtent2D _windowExtent{ 1700 , 900 };
 
@@ -38,6 +39,7 @@ public:
 
 	VkPipelineLayout _trianglePipelineLayout;
 	VkPipeline _trianglePipeline;
+	VkPipeline _redTrianglePipeline;
 
 	struct SDL_Window* _window{ nullptr };
 
