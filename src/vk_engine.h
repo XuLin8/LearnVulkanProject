@@ -4,6 +4,33 @@
 #pragma once
 
 #include <vk_types.h>
+#include <vector>
+#include <functional>
+#include <deque>
+
+#include <vk_mesh.h>
+#include <glm/glm.hpp>
+
+struct MeshPushConstants {
+	glm::vec4 data;
+	glm::mat4 render_matrix;
+};
+class PipelineBuilder {
+public:
+
+	std::vector<VkPipelineShaderStageCreateInfo> _shaderStages;
+	VkPipelineVertexInputStateCreateInfo _vertexInputInfo;
+	VkPipelineInputAssemblyStateCreateInfo _inputAssembly;
+	VkViewport _viewport;
+	VkRect2D _scissor;
+	VkPipelineRasterizationStateCreateInfo _rasterizer;
+	VkPipelineColorBlendAttachmentState _colorBlendAttachment;
+	VkPipelineMultisampleStateCreateInfo _multisampling;
+	VkPipelineLayout _pipelineLayout;
+
+	VkPipeline build_pipeline(VkDevice device, VkRenderPass pass);
+	VkPipelineDepthStencilStateCreateInfo _depthStencil;
+};
 
 struct DeletionQueue
 {
@@ -60,6 +87,21 @@ public:
 
 	DeletionQueue _mainDeletionQueue;
 
+	VmaAllocator _allocator; //vma lib allocator
+
+	VkPipeline _meshPipeline;
+	Mesh _triangleMesh;
+
+	VkPipelineLayout _meshPipelineLayout;
+
+	Mesh _monkeyMesh;
+
+	VkImageView _depthImageView;
+	AllocatedImage _depthImage;
+
+	//the format for the depth image
+	VkFormat _depthFormat;
+
 	struct SDL_Window* _window{ nullptr };
 
 	//initializes everything in the engine
@@ -85,22 +127,13 @@ private:
 	void init_sync_structures();
 	void init_pipelines();
 
+	void load_meshes();
+
+	void upload_mesh(Mesh& mesh);
+
+	//loads a shader module from a spir-v file. Returns false if it errors
 	bool load_shader_module(const char* filePath, VkShaderModule* outShaderModule);
 };
 
-class PipelineBuilder {
-public:
 
-	std::vector<VkPipelineShaderStageCreateInfo> _shaderStages;
-	VkPipelineVertexInputStateCreateInfo _vertexInputInfo;
-	VkPipelineInputAssemblyStateCreateInfo _inputAssembly;
-	VkViewport _viewport;
-	VkRect2D _scissor;
-	VkPipelineRasterizationStateCreateInfo _rasterizer;
-	VkPipelineColorBlendAttachmentState _colorBlendAttachment;
-	VkPipelineMultisampleStateCreateInfo _multisampling;
-	VkPipelineLayout _pipelineLayout;
-
-	VkPipeline build_pipeline(VkDevice device, VkRenderPass pass);
-};
 
